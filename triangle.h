@@ -5,26 +5,25 @@
 #include <cmath>
 #include <vector>
 
-using namespace std;
-
 struct Point {
     double x, y;
 };
 
-double distance(const Point &p1, const Point &p2);
-
 struct Triangle {
     Point A, B, C;
 
+    // Method 1: Heron's Area Method (from your example)
     double area() const;
-    
-    // Перевірка на виродженість
-    bool isDegenerate() const;
+    bool containsHeron(const Point &P) const;
 
-    // Потужний векторний добуток
-    bool contains(const Point &P) const;
+    // Method 2: Vector Cross Product Method
+    bool containsVector(const Point &P) const;
+
+    // General check for degenerate triangle
+    bool isDegenerate() const;
 };
 
+double distance(const Point &p1, const Point &p2);
 double heronArea(const Triangle &t);
 void RunProgram();
 
