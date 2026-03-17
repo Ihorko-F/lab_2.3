@@ -12,14 +12,11 @@ struct Point {
 struct Triangle {
     Point A, B, C;
 
-    // Method 1: Heron's Area Method (from your example)
     double area() const;
     bool containsHeron(const Point &P) const;
 
-    // Method 2: Vector Cross Product Method
     bool containsVector(const Point &P) const;
 
-    // General check for degenerate triangle
     bool isDegenerate() const;
 };
 
