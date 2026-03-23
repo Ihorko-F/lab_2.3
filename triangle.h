@@ -12,16 +12,16 @@ struct Point {
 struct Triangle {
     Point A, B, C;
 
-    double area() const;
-    bool containsHeron(const Point &P) const;
+    bool containsHeron(Point &P);
 
-    bool containsVector(const Point &P) const;
+    bool containsVector(Point &P);
 
-    bool isDegenerate() const;
+    bool isDegenerate();
+
+    double heronArea();
 };
 
 double distance(const Point &p1, const Point &p2);
-double heronArea(const Triangle &t);
 void RunProgram();
 
 #endif

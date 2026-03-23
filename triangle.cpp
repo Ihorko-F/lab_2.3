@@ -7,38 +7,35 @@ double distance(const Point &p1, const Point &p2) {
     return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
 }
 
-double heronArea(const Triangle &t) {
-    double a = distance(t.A, t.B);
-    double b = distance(t.B, t.C);
-    double c = distance(t.C, t.A);
+double Triangle::heronArea() {
+    double a = distance(A, B);
+    double b = distance(B, C);
+    double c = distance(C, A);
     double s = (a + b + c) / 2.0;
     double val = s * (s - a) * (s - b) * (s - c);
-    return sqrt(val < 0 ? 0 : val);
+    return sqrt(val);
 }
 
-double Triangle::area() const {
-    return heronArea(*this);
+bool Triangle::isDegenerate(){
+    return this->heronArea() < 1e-9;
 }
 
-bool Triangle::isDegenerate() const {
-    return area() < 1e-9;
-}
-
-bool Triangle::containsHeron(const Point &P) const {
+bool Triangle::containsHeron(Point &P){
     Triangle T1 = {A, B, P};
     Triangle T2 = {B, C, P};
     Triangle T3 = {C, A, P};
 
-    double S_main = area();
-    double S_sum = T1.area() + T2.area() + T3.area();
+    double S_main = this->heronArea();
+    double S_sum = T1.heronArea() + T2.heronArea() + T3.heronArea();
 
     return fabs(S_main - S_sum) < 1e-9;
 }
 
-bool Triangle::containsVector(const Point &P) const {
-    auto cross_product = [](Point p1, Point p2, Point p) {
-        return (p2.x - p1.x) * (p.y - p1.y) - (p2.y - p1.y) * (p.x - p1.x);
-    };
+double cross_product (Point p1, Point p2, Point p) {
+    return (p2.x - p1.x) * (p.y - p1.y) - (p2.y - p1.y) * (p.x - p1.x);
+}
+
+bool Triangle::containsVector(Point &P){
 
     double cp1 = cross_product(A, B, P);
     double cp2 = cross_product(B, C, P);
@@ -61,7 +58,6 @@ void RunProgram() {
 
     if (t.isDegenerate()) {
         cout << "Error: Degenerate triangle (area is zero)!" << endl;
-        return;
     }
 
     int count;
