@@ -3,21 +3,29 @@
 
 using namespace std;
 
-double distance(const Point &p1, const Point &p2) {
+long double distance(const Point &p1, const Point &p2) {
     return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
 }
 
-double Triangle::heronArea() {
-    double a = distance(A, B);
-    double b = distance(B, C);
-    double c = distance(C, A);
-    double s = (a + b + c) / 2.0;
-    double val = s * (s - a) * (s - b) * (s - c);
+
+double Triangle::area() const {
+    return fabs(
+        (B.x - A.x) * (C.y - A.y) -
+        (B.y - A.y) * (C.x - A.x)
+    ) / 2.0;
+}
+
+long double Triangle::heronArea() {
+    long double a = distance(A, B);
+    long double b = distance(B, C);
+    long double c = distance(C, A);
+    long double s = (a + b + c) / 2.0;
+    long double val = s * (s - a) * (s - b) * (s - c);
     return sqrt(val);
 }
 
 bool Triangle::isDegenerate(){
-    return this->heronArea() < 1e-9;
+    return this->area() < 1e-8;
 }
 
 bool Triangle::containsHeron(Point &P){
@@ -25,10 +33,10 @@ bool Triangle::containsHeron(Point &P){
     Triangle T2 = {B, C, P};
     Triangle T3 = {C, A, P};
 
-    double S_main = this->heronArea();
-    double S_sum = T1.heronArea() + T2.heronArea() + T3.heronArea();
+    long double S_main = this->heronArea();
+    long double S_sum = T1.heronArea() + T2.heronArea() + T3.heronArea();
 
-    return fabs(S_main - S_sum) < 1e-9;
+    return fabs(S_main - S_sum) < 1e-17;
 }
 
 double cross_product (Point p1, Point p2, Point p) {

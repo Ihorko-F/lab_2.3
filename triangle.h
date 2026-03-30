@@ -6,7 +6,7 @@
 #include <vector>
 
 struct Point {
-    double x, y;
+    long double x, y;
 };
 
 struct Triangle {
@@ -18,10 +18,12 @@ struct Triangle {
 
     bool isDegenerate();
 
-    double heronArea();
+    long double heronArea();
+
+    double area () const;
 };
 
-double distance(const Point &p1, const Point &p2);
+long double distance(const Point &p1, const Point &p2);
 void RunProgram();
 
 #endif
